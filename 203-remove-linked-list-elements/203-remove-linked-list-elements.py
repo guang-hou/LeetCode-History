@@ -8,15 +8,17 @@ class Solution:
         if not head: return None
         
         dummy_head = ListNode(0, head)
-        cur_node = dummy_head
+        previous = dummy_head
+        cur_node = head
         
-        while cur_node and cur_node.next:
-            next_node = cur_node.next
-            if next_node.val == val:
-                cur_node.next = next_node.next
-            else:
+        while cur_node:
+            if cur_node.val == val:
+                previous.next = cur_node.next
                 cur_node = cur_node.next
-        
+            else:
+                previous = cur_node
+                cur_node = cur_node.next
+            
         return dummy_head.next
                 
             
