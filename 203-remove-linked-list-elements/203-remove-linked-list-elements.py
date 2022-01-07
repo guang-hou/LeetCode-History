@@ -8,17 +8,15 @@ class Solution:
         if not head: return None
         
         dummy_head = ListNode(0, head)
-        previous_node = dummy_head
-        cur_node = head
+        cur_node = dummy_head  # this varialbe records the latest node whose valu != val 
         
-        while cur_node:
-            if cur_node.val == val:
-                previous_node.next = cur_node.next
-                cur_node = cur_node.next
+        while cur_node.next: # this equals to: cur_node.next != None
+            next_node = cur_node.next
+            if next_node.val == val:   # compare this node value with val
+                cur_node.next = next_node.next
             else:
-                previous_node = cur_node
                 cur_node = cur_node.next
-            
+        
         return dummy_head.next
                 
             
