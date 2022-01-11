@@ -10,16 +10,16 @@ class Solution:
         
         dummy_head = ListNode(0, head)
         
-        pre, cur, nxt = dummy_head, head, head.next
+        pre, cur = dummy_head, head
         
-        while cur and nxt:
-            cur.next = nxt.next
-            nxt.next = cur
-            pre.next = nxt
+        while cur and cur.next:
+            post = cur.next
+            
+            cur.next = post.next
+            post.next = cur
+            pre.next = post
             
             pre = cur
-            cur = cur.next
-            if cur:
-                nxt = cur.next
+            cur = pre.next
         
         return dummy_head.next
