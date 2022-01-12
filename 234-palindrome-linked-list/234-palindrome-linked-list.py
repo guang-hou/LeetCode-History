@@ -14,10 +14,8 @@ class Solution:
         
         if length == 1:
             return True
-        elif length == 2 and head.val != head.next.val:
-            return False
-        elif length == 3 and head.val == head.next.next.val:
-            return True
+        #elif length == 2 and head.val != head.next.val:
+        #    return False
         
         pre, cur = None, head
         
