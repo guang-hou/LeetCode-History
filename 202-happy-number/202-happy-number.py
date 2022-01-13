@@ -1,15 +1,15 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
-        pre = set()
+        record= set()
         
         while True:
-            pre.add(n)
             n = self.sumOfSquares(n)
             if n == 1:
                 return True
+            elif n in record:
+                return False
             else:
-                if n in pre:
-                    return False
+                record.add(n)
         
     def sumOfSquares(self, n):
         res = 0
