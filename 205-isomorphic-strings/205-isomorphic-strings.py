@@ -4,16 +4,11 @@ class Solution:
         
         for i in range(len(s)):
             a , b = s[i], t[i]
-            if a not in record1:
-                record1[a] = b
-            else:
-                if record1[a] != b:
-                    return False
-                
-            if b not in record2:
-                record2[b] = a
-            else:
-                if record2[b] != a:
-                    return False
+            
+            record1[a] = record1.get(a, b)
+            record2[b] = record2.get(b, a)
+            
+            if record1[a] != b or record2[b] != a:
+                return False
         
         return True
