@@ -9,12 +9,9 @@ class Solution:
             if char not in record:
                 return False
             else:
-                record[char] -= 1
-                if record[char] < 0:
+                if record[char] == 0:
                     return False
-        
-        for v in record.values():
-            if v < 0:
-                return False
+                else:
+                    record[char] -= 1
         
         return True
