@@ -1,13 +1,41 @@
 class Solution:
-
-    def get_string(self, s: str) -> str :
-        bz = []
-        for char in s :
-            if char != '#' :
-                bz.append(char) # 模拟入栈
-            elif len(bz) > 0: # 栈非空才能弹栈
-                bz.pop() # 模拟弹栈
-        return str(bz)
-
     def backspaceCompare(self, s: str, t: str) -> bool:
-        return self.get_string(s) == self.get_string(t)
+        i, j = len(s) - 1, len(t) - 1
+        
+        sSkip, tSkip = 0, 0
+        
+        while True:
+            while i > -1:
+                if s[i] == '#':
+                    sSkip += 1
+                    i -= 1
+                else:
+                    if sSkip > 0:
+                        i -= 1
+                        sSkip -= 1
+                    else:
+                        break
+                        
+            while j > -1:
+                if t[j] == '#':
+                    tSkip += 1
+                    j -= 1
+                else:
+                    if tSkip > 0:
+                        j -= 1
+                        tSkip -= 1
+                    else:
+                        break
+            
+            if i == -1 and j == -1: 
+                return True
+            elif i == -1 or j == -1:
+                return False
+            else:
+                if s[i] != t[j]:
+                    return False
+                else:
+                    i -= 1
+                    j -= 1
+        
+        return True
