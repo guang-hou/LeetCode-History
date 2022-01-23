@@ -3,36 +3,33 @@ class Solution:
         if len(nums) < 4: return None
         
         nums.sort()
-        N = len(nums)
         res = []
         
-        for i in range(N):
+        for i in range(len(nums)):
             if i > 0 and nums[i] == nums[i - 1]:
                 continue
             
-            first_target = target - nums[i]
-            for j in range(i + 1, N):
+            for j in range(i + 1, len(nums)):
                 if j > i + 1 and nums[j] == nums[j - 1]:
                     continue
                 
-                second_target = first_target - nums[j]
+                local_target = target - nums[i] - nums[j]
                 
-                left, right = j + 1, N - 1
+                left, right = j + 1, len(nums) - 1
                 
                 while left < right:
-                    local_sum = nums[left] + nums[right]
-                    
-                    if local_sum < second_target:
+                    a, b = nums[left], nums[right]
+                    if a + b < local_target:
                         left += 1
-                    elif local_sum > second_target:
+                    elif a + b > local_target:
                         right -= 1
                     else:
-                        res.append([nums[i], nums[j], nums[left], nums[right]])
+                        res.append([nums[i], nums[j], a, b])
                         while left < right and nums[left + 1] == nums[left]:
                             left += 1
                         while left < right and nums[right - 1] == nums[right]:
                             right -= 1
-                        
                         left += 1
                         right -= 1
+            
         return res
