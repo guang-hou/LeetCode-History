@@ -20,9 +20,7 @@ class Solution:
             for _ in range(n):
                 cur = dq.popleft()
                 tmp.append(cur.val)
-                if cur.children:
-                    for node in cur.children:
-                        dq.append(node)
+                if cur.children: dq.extend(cur.children)
                         
             res.append(tmp)
         
