@@ -21,5 +21,3 @@ class Solution:
                     return res
                 if cur.left: dq.append(cur.left)
                 if cur.right: dq.append(cur.right)
-        
-        return res
