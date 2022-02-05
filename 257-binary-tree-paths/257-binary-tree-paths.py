@@ -15,7 +15,6 @@ class Solution:
             tmp.append(str(node.val))
             if not node.left and not node.right:
                 res.append("->".join(tmp))
-                return
             
             if node.left:
                 traversal(node.left)
