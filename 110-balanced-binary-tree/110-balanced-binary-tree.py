@@ -7,10 +7,9 @@
 class Solution:
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         if not root: return True
-        left_depth = self.getDepth(root.left)
-        right_depth = self.getDepth(root.right)
+        res = self.getDepth(root)
         
-        if left_depth == -1 or right_depth == -1 or abs(left_depth - right_depth) > 1:
+        if res == -1:
             return False
         else:
             return True
