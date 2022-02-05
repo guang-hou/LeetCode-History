@@ -7,20 +7,20 @@
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
         
-        stack = [root.left, root.right]  
-        
-        while stack:
-            cur1 = stack.pop()
-            cur2 = stack.pop()
-            if cur1 and not cur2 or not cur1 and cur2:
+        def traverse(node1, node2):
+            if not node1 and not node2:
+                return True
+            elif (not node1 and node2) or (node1 and not node2):
                 return False
-            elif cur1 and cur2:
-                if cur1.val != cur2.val:
-                    return False
-                else:
-                    stack.append(cur1.left)
-                    stack.append(cur2.right)
-                    stack.append(cur1.right)
-                    stack.append(cur2.left)
+            elif node1.val != node2.val:
+                return False
             
-        return True
+            left_right = traverse(node1.left, node2.right)
+            right_left = traverse(node1.right, node2.left)
+    
+            return left_right and right_left
+        
+        return traverse(root.left, root.right)
+            
+            
+            
