@@ -7,30 +7,19 @@
 class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root: return False
-        
-        path = []
-        res = [False]
-        
-        def traverse(node):
-            if not node: return None
-            
-            path.append(node.val)
-            
-            if not node.left and not node.right:
-                if sum(path) == targetSum: 
-                    res[0] = True
-                    
-            if node.left:
-                traverse(node.left)
-                path.pop()
-            
-            if node.right:
-                traverse(node.right)
-                path.pop()
-            
-        
-        traverse(root)
-            
-        return res[0]
+
+        if root and not root.left and not root.right:
+            if targetSum == root.val: return True
+            else: return False
+
+        left_res, right_res = False, False
+
+        if root.left:
+            left_res = self.hasPathSum(root.left, targetSum - root.val)
+
+        if root.right:
+            right_res = self.hasPathSum(root.right, targetSum - root.val)
+
+        return left_res or right_res
             
             
