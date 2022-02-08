@@ -7,23 +7,21 @@
 class Solution:
     def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
         stack = []
-        
-        def add_left(node):
-            while node:
-                stack.append(node)
-                node = node.left
-                
-        add_left(root)
+        cur = root
         
         res = float("inf")
         pre = None
-        while stack:
-            cur = stack.pop()
-            if pre and abs(cur.val - pre.val) < res:
-                res = abs(cur.val - pre.val)
-            pre = cur
-            
-            if cur.right:
-                add_left(cur.right)
+
+        while cur or stack:
+            if cur:
+                stack.append(cur)
+                cur = cur.left
+            else:
+                cur = stack.pop()
+                if pre and abs(cur.val - pre.val) < res:
+                    res = abs(cur.val - pre.val)
+                pre = cur
+                cur = cur.right
+
         
         return res
