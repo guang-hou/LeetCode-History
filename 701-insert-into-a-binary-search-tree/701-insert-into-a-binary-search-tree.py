@@ -15,8 +15,8 @@ class Solution:
             return root
         
         if val > root.val and root.right:
-            root.right = self.insertIntoBST(root.right, val)
+            self.insertIntoBST(root.right, val)
         elif val < root.val and root.left:
-            root.left = self.insertIntoBST(root.left, val)
+            self.insertIntoBST(root.left, val)
             
         return root
