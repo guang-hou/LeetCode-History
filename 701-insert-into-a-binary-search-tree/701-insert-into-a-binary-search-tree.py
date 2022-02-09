@@ -11,13 +11,13 @@ class Solution:
         cur = root
         
         while cur:
-            if cur and val > cur.val:
+            if val > cur.val:
                 if cur.right: cur = cur.right
                 else: 
                     cur.right = TreeNode(val)
                     return root
         
-            elif cur and val < cur.val:
+            elif val < cur.val:
                 if cur.left: cur = cur.left
                 else: 
                     cur.left = TreeNode(val)
