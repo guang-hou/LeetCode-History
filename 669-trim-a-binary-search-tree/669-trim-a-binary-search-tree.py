@@ -6,24 +6,25 @@
 #         self.right = right
 class Solution:
     def trimBST(self, root: Optional[TreeNode], low: int, high: int) -> Optional[TreeNode]:
+        
+        while root and (root.val < low or root.val > high):
+            if root.val < low:
+                root = root.right
+            else:
+                root = root.left
+        
         if not root: return None
         
-        root.left = self.trimBST(root.left, low, high)
-        root.right = self.trimBST(root.right, low, high)
+        cur = root
+        while cur:
+            while cur.left and cur.left.val < low:
+                cur.left = cur.left.right
+            cur = cur.left
         
-        if root.val < low or root.val > high:
-            if not root.left and not root.right:
-                return None
-            elif root.left and not root.right:
-                return root.left
-            elif not root.left and root.right:
-                return root.right
-            else:
-                right_left = root.right
-                while right_left.left:
-                    right_left = right_left.left
-                
-                right_left.left = root.left
-                return root.right
+        cur = root
+        while cur:
+            while cur.right and cur.right.val > high:
+                cur.right = cur.right.left
+            cur = cur.right
         
         return root
