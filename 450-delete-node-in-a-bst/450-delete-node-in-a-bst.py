@@ -11,7 +11,7 @@ class Solution:
         # check if the node exists
         cur = root
         pre = None
-        right = False
+        right = False  # track if pre.right = cur
         while cur:
             if key > cur.val:
                 pre = cur
@@ -26,49 +26,26 @@ class Solution:
         
         if not cur: return root
         
-        if not cur.left and not cur.right:
-            if pre == None:
+        def deleteNode(node):
+            if not node.left and not node.right: 
                 return None
+            elif not node.left:
+                return node.right
+            elif not node.right:
+                return node.left
             else:
-                if right: pre.right = None
-                else: pre.left = None
-        if cur.left and not cur.right:
-            if pre == None:
-                return cur.left
-            else:
-                if right: pre.right = cur.left
-                else: pre.left = cur.left
-            
-        if not cur.left and cur.right:
-            if pre == None:
-                return cur.right
-            else:
-                if right: pre.right = cur.right
-                else: pre.left = cur.right
-            
-        if cur.left and cur.right:
-            if pre == None:
-                if not cur.right.left:
-                    cur.right.left = cur.left
-                    return cur.right
-                else:
-                    right_left = cur.right.left
-                    while right_left.left:
-                        right_left = right_left.left
-                    right_left.left = cur.left
-                    return cur.right
-            else:
-                if not cur.right.left:
-                    cur.right.left = cur.left
-                    if right: pre.right = cur.right
-                    else: pre.left = cur.right
-
-                else:
-                    right_left = cur.right.left
-                    while right_left and right_left.left:
-                        right_left = right_left.left
-                    right_left.left = cur.left
-                    if right: pre.right = cur.right
-                    else: pre.left = cur.right
+                right_left = node.right
+                while right_left.left:
+                    right_left = right_left.left
+                
+                right_left.left = node.left
+                
+                return node.right
+    
         
+        if pre == None: return deleteNode(cur)
+                
+        
+        if right: pre.right = deleteNode(cur)
+        else: pre.left = deleteNode(cur)
         return root
