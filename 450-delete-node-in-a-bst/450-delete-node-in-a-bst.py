@@ -8,53 +8,29 @@ class Solution:
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
         if not root: return None
         
-        # check if the node exists
-        cur = root
-        pre = None
-        right = False  # track if pre.right = cur
-        while cur:
-            if key > cur.val:
-                pre = cur
-                right = True
-                cur = cur.right
-            elif key < cur.val:
-                pre = cur
-                right = False
-                cur = cur.left
-            else:
-                break
-        
-        if not cur: return root
-        
-        def swapInorderPredecessor(node):
-            if not node.left and not node.right: 
+        # the nodehas value equals key
+        if key == root.val:
+            if not root.left and not root.right: 
                 return None
-            elif not node.left:
-                return node.right
+
+            elif not root.left:
+                tmp = root.right
+                return tmp
+
+            elif not root.right:
+                tmp = root.left
+                return tmp
+            
             else:
-                inorder_pre = node.left
-                prev = None
-                while inorder_pre.right:
-                    prev = inorder_pre
-                    inorder_pre = inorder_pre.right
-                
-                if inorder_pre == node.left:
-                    if node.right: inorder_pre.right = node.right
+                right = root.right
+                while right.left:
+                    right = right.left
 
-                else:
-                    if inorder_pre.left:   
-                        prev.right = inorder_pre.left
-                    else:            # inorder predecessor has no left child, breake the link between prev and inorder_pre
-                        prev.right = None
-                    inorder_pre.left = node.left
-                    if node.right: inorder_pre.right = node.right
+                right.left = root.left
+                return root.right
 
-                return inorder_pre
-    
-        
-        if pre == None: return swapInorderPredecessor(cur)
-                
-        
-        if right: pre.right = swapInorderPredecessor(cur)
-        else: pre.left = swapInorderPredecessor(cur)
+        # root val doesn't equal key, go down to its subnodes
+        if key > root.val: root.right = self.deleteNode(root.right, key)
+        elif key < root.val: root.left = self.deleteNode(root.left, key)
+            
         return root
