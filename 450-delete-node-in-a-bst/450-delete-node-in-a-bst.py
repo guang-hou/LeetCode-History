@@ -26,26 +26,35 @@ class Solution:
         
         if not cur: return root
         
-        def deleteNode(node):
+        def swapInorderPredecessor(node):
             if not node.left and not node.right: 
                 return None
             elif not node.left:
                 return node.right
-            elif not node.right:
-                return node.left
             else:
-                right_left = node.right
-                while right_left.left:
-                    right_left = right_left.left
+                inorder_pre = node.left
+                prev = None
+                while inorder_pre.right:
+                    prev = inorder_pre
+                    inorder_pre = inorder_pre.right
                 
-                right_left.left = node.left
-                
-                return node.right
+                if inorder_pre == node.left:
+                    if node.right: inorder_pre.right = node.right
+
+                else:
+                    if inorder_pre.left:   
+                        prev.right = inorder_pre.left
+                    else:            # inorder predecessor has no left child, breake the link between prev and inorder_pre
+                        prev.right = None
+                    inorder_pre.left = node.left
+                    if node.right: inorder_pre.right = node.right
+
+                return inorder_pre
     
         
-        if pre == None: return deleteNode(cur)
+        if pre == None: return swapInorderPredecessor(cur)
                 
         
-        if right: pre.right = deleteNode(cur)
-        else: pre.left = deleteNode(cur)
+        if right: pre.right = swapInorderPredecessor(cur)
+        else: pre.left = swapInorderPredecessor(cur)
         return root
