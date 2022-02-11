@@ -14,12 +14,10 @@ class Solution:
                 return None
 
             elif not root.left:
-                tmp = root.right
-                return tmp
+                return root.right
 
             elif not root.right:
-                tmp = root.left
-                return tmp
+                return root.left
             
             else:
                 right = root.right
