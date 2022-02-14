@@ -8,18 +8,18 @@ class Solution:
     def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if not root: return None
         
-        pre = [0]
+        cur = root
+        stack = []
+        pre = 0
         
-        def traverse(node):
-            if not node: return None
-            
-            traverse(node.right)
-            
-            node.val += pre[0]
-            pre[0] = node.val
-            
-            traverse(node.left)
-        
-        traverse(root)
+        while cur or stack:
+            if cur:
+                stack.append(cur)
+                cur = cur.right
+            else:
+                cur = stack.pop()
+                cur.val += pre
+                pre = cur.val
+                cur = cur.left
         
         return root
