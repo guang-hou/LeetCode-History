@@ -7,20 +7,22 @@
 class Solution:
     def sumNumbers(self, root: Optional[TreeNode]) -> int:
         res = [0]
-        tmp = []
+        tmp = [str(root.val)]
         
         def traverse(node):
             if not node: return None
             
-            tmp.append(str(node.val))
-            
             if not node.left and not node.right:
                 res[0] += int("".join(tmp))
             
-            if node.left: traverse(node.left)
-            if node.right: traverse(node.right)
-            
-            tmp.pop()
+            if node.left: 
+                tmp.append(str(node.left.val))
+                traverse(node.left)
+                tmp.pop()
+            if node.right: 
+                tmp.append(str(node.right.val))
+                traverse(node.right)                
+                tmp.pop()
         
         traverse(root)
         
