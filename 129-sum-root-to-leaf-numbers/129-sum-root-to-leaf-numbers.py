@@ -17,9 +17,7 @@ class Solution:
             if not node.left and not node.right:
                 res[0] += int("".join(tmp))
             
-            if node.left: 
-                traverse(node.left)
-                #if node.left.left or node.left.right: tmp.pop()
+            if node.left: traverse(node.left)
             if node.right: traverse(node.right)
             
             tmp.pop()
