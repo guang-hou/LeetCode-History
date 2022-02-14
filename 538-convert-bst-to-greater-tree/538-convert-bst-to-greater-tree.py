@@ -7,20 +7,19 @@
 class Solution:
     def convertBST(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if not root: return None
-        res = []
+        
+        pre = [0]
         
         def traverse(node):
             if not node: return None
-            if node.left: traverse(node.left)
-            res.append(node)
-            if node.right: traverse(node.right)
+            
+            traverse(node.right)
+            
+            node.val += pre[0]
+            pre[0] = node.val
+            
+            traverse(node.left)
         
         traverse(root)
-        
-        current_sum = 0
-        while res:
-            cur = res.pop()
-            current_sum += cur.val
-            cur.val = current_sum
         
         return root
