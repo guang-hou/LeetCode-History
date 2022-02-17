@@ -12,7 +12,7 @@ class Solution:
                 res.append("".join(path[:]))
                 return
             
-            for i in range(start, end):
+            for i in range(start, end - (len(digits) - len(path) - 1)):
                 letters = mapping[digits[i]]
                 for letter in letters:
                     path.append(letter)                        
