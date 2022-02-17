@@ -14,11 +14,11 @@ class Solution:
                 res.append("".join(path[:]))
                 return
             
-            for i in range(start, end - (len(digits) - len(path) - 1)):
+            for i in range(start, end):
                 letters = mapping[digits[i]]
                 for letter in letters:
                     path.append(letter)                        
-                    backtrack(start + 1, end) # recursion
+                    backtrack(i + 1, end) # recursion
                     path.pop()
         
         backtrack(0, len(digits))
