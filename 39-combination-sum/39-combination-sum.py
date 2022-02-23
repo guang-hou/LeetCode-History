@@ -10,8 +10,8 @@ class Solution:
                 return
             elif sum(path) < target:
                 for j in range(i, len(candidates)):
-                    if j > i and candidates[j] == candidates[j - 1]:
-                        continue
+                    #if j > i and candidates[j] == candidates[j - 1]:
+                    #    continue
                     path.append(candidates[j])
                     backtrack(j)
                     path.pop()
