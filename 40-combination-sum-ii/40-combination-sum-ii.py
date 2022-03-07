@@ -4,20 +4,20 @@ class Solution:
         res = []
         path = []
         
-        def backtrack(startIndex):
-            if sum(path) == target:
+        def backtrack(startIndex, currentTarget):
+            if currentTarget == 0:
                 res.append(path[:])
                 return
             
-            elif sum(path) < target and startIndex < len(candidates):
+            elif currentTarget > 0 and startIndex < len(candidates):
                 for i in range(startIndex, len(candidates)):
                     if i > startIndex and candidates[i] == candidates[i - 1]:
                         continue
                     path.append(candidates[i])
-                    backtrack(i + 1)
+                    backtrack(i + 1, currentTarget - candidates[i])
                     path.pop()
                     
-        backtrack(0)
+        backtrack(0, target)
         
         return res
             
