@@ -18,8 +18,8 @@ class Solution:
             if res:
                 return
             
-            if start not in combined_tickets:
-                return
+            # if start not in combined_tickets:
+            #     return
             
             ends = combined_tickets[start]
             for i in range(len(ends)):
@@ -32,5 +32,4 @@ class Solution:
         
         backtrack("JFK")
         
-
         return res[0]
