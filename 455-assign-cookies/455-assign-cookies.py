@@ -4,7 +4,6 @@ class Solution:
         
         g.sort()
         s.sort()
-        res = 0
         
         i,j = 0, 0
         while i < len(g) and j < len(s):
@@ -13,6 +12,5 @@ class Solution:
                 j += 1
             else:
                 j += 1
-        
         
         return i
