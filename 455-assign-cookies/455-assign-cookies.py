@@ -6,11 +6,13 @@ class Solution:
         s.sort()
         res = 0
         
-        for cookie in s[::-1]:
-            for i in range(len(g) - 1, -1, -1):
-                if cookie >= g[i]:
-                    res += 1
-                    g.pop(i)
-                    break
+        i,j = 0, 0
+        while i < len(g) and j < len(s):
+            if g[i] <= s[j]:
+                i += 1
+                j += 1
+            else:
+                j += 1
         
-        return res
+        
+        return i
