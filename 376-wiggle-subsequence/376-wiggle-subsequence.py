@@ -2,11 +2,11 @@ class Solution:
     def wiggleMaxLength(self, nums: List[int]) -> int:
         if len(nums) < 2: return len(nums)
         
-        if len(nums) == 2:
-            if nums[0] != nums[1]: 
-                return 2
-            else:
-                return 1
+        # if len(nums) == 2:
+        #     if nums[0] != nums[1]: 
+        #         return 2
+        #     else:
+        #         return 1
 
         res = 0
         i = 1
