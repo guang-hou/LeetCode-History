@@ -37,11 +37,13 @@ class Solution:
         for i in range(1, n):
             if i <= cover:
                 next_cover = max(next_cover, nums[i] + i)
-                if next_cover >= n - 1:
-                    return step + 1
+                # if next_cover >= n - 1:
+                #     return step + 1
             if i == cover:
                 cover = next_cover
                 step += 1
+                if cover >= n - 1:
+                    break
         
         return step
         
