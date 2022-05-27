@@ -2,6 +2,8 @@ class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
         if len(s) == 0:
             return True
+        elif len(s) > len(t):
+            return False
         
         i, j = 0, 0
         
