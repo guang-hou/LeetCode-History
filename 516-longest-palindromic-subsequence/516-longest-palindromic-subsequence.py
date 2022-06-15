@@ -14,7 +14,7 @@ class Solution:
                         dp[i][j] = 1
                 else: # 右上其他區域，自然會保證不會out of bound
                     if s[i] == s[j]:
-                        dp[i][j] = max(dp[i + 1][j], dp[i][j - 1], dp[i + 1][j - 1] + 2)
+                        dp[i][j] = dp[i + 1][j - 1] + 2
                     else:
                         dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
 
