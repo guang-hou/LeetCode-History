@@ -1,21 +1,15 @@
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
-        heights.append(0)  # 加入一个小的值，那么原来队列中的值都会被弹出得到计算
-        m = len(heights)
+        heights.insert(0, 0)
+        heights.append(0)  # 这样left_index 一直在，stack不会变为空
         stack = [0]
-        res = 0
-        
-        for i in range(1, m):
-            while stack and heights[i] < heights[stack[-1]]:
-                idx = stack.pop()  # 计算高度列的index
-                right_idx = i
-                
-                if stack: 
-                    left_idx = stack[-1] # handle the case where thiere is no smaller element
-                else: 
-                    left_idx = -1
-                area = (right_idx - left_idx - 1) * heights[idx]
-                res = max(res, area)
+        result = 0
+        for i in range(1, len(heights)):
+            while heights[i] < heights[stack[-1]]:
+                mid_height = heights[stack[-1]]
+                stack.pop()
+                # area = width * height
+                area = (i - stack[-1] - 1) * mid_height
+                result = max(area, result)
             stack.append(i)
-
-        return res
+        return result
