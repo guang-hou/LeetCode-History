@@ -3,14 +3,15 @@ class Solution:
         stack =[]
         
         for char in s:
-            if char == "(":
-                stack.append(')')
-            elif char == '{':
-                stack.append('}')
-            elif char == '[':
-                stack.append(']')        
-            else:
-                if not stack or stack.pop() != char:
-                    return False
+            match char:
+                case "(":
+                    stack.append(')')
+                case  '{':
+                    stack.append('}')
+                case '[':
+                    stack.append(']')        
+                case _:
+                    if not stack or stack.pop() != char:
+                        return False
                 
         return not stack
