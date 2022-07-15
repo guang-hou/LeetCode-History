@@ -15,12 +15,7 @@ class Solution:
                 elif t == '*':
                     num.append(num1 * num2)
                 elif t == '/':
-                    res = num1 / num2
-                    if res >= 0:
-                        res = num1 // num2
-                    else:
-                        res = -(- num1 // num2)
-                    num.append(res)
+                    num.append(int(num1 / num2))
                 print(num[-1])
         
         return num[0]
