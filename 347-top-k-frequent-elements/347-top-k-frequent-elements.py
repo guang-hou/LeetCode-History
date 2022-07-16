@@ -15,4 +15,4 @@ class Solution:
             res.extend(frq[cnt])
             if len(res) >= k: return res[:k]
 
-        return res[:k]
+        #return res[:k]
