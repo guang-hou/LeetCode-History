@@ -5,17 +5,9 @@ class Solution:
         pq = PriorityQueue()
         
         count = Counter(nums)
-        print(count)
-        
-        for key in count:
-            pq.put((-count[key], key))
         
         res = []
-        
-        for _ in range(k):
-            val = pq.get()
-            print(val)
-            res.append(val[1])
+        for key, val in count.most_common(k):
+            res.append(key)
             
-        
         return res
