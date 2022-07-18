@@ -1,30 +1,29 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
-        if len(height) < 3:
-            return 0
+        right_larger = [i for i in range(len(height))]
+        left_larger = [i for i in range(len(height))]
         
-        right_max = [0] * len(height)
-        left_max = [0] * len(height)
+        stack = []
+        for i in range(1, len(height)):
+            while stack and height[i] > height[stack[-1]]:
+                right_larger[stack.pop()] = i
+            
+            stack.append(i)
         
-        largest = height[0]
-        for i in range(1, len(height) - 1):
-            if height[i] > largest:
-                left_max[i] = height[i]
-                largest = height[i]
-            else:
-                left_max[i] = largest
-        
-                
-        largest = height[len(height) - 1]
-        for i in range(len(height) - 2, 0, -1):
-            if height[i] > largest:
-                right_max[i] = height[i]
-                largest = height[i]
-            else:
-                right_max[i] = largest
-        
+        stack = []
+        for i in range(len(height) - 2, -1, -1):
+            while stack and height[i] >= height[stack[-1]]:
+                left_larger[stack.pop()] = i
+            
+            stack.append(i)
+            
         res = 0
         for i in range(1, len(height) - 1):
-            res +=  min(left_max[i], right_max[i]) - height[i]
+            l, r = left_larger[i], right_larger[i]
+            w = r - l - 1
+            h = min(height[l], height[r]) - height[i]
+            res += w * h
         
         return res
+        
+        
