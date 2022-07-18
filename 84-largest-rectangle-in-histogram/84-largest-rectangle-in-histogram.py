@@ -8,14 +8,16 @@ class Solution:
         stack = []
         for i in range(n):
             while stack and heights[i] < heights[stack[-1]]:
-                right_smaller[stack.pop()] = i
+                idx = stack.pop()
+                right_smaller[idx] = i
             stack.append(i)
           
         # calculate left_smaller
         stack = []
         for i in range(n - 1, -1, -1):
             while stack and heights[i] < heights[stack[-1]]:
-                left_smaller[stack.pop()] = i
+                idx = stack.pop()
+                left_smaller[idx] = i
             stack.append(i)
             
 
