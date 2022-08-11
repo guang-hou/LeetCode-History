@@ -1,21 +1,21 @@
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
-        res, path = [], []
+        self.res, self.path = [], []
         
         for i in range(1, n + 1):
-            self.backtrack(i, n, k, path, res)
+            self.backtrack(i, n, k)
         
-        return res
+        return self.res
         
-    def backtrack(self, i, n, k, path, res):
-        path.append(i)
+    def backtrack(self, i, n, k):
+        self.path.append(i)
         
-        if len(path) == k:
-            res.append(path[:])
-            path.pop()
+        if len(self.path) == k:
+            self.res.append(self.path[:])
+            self.path.pop()
             return
         
         for j in range(i + 1, n + 1):
-            self.backtrack(j, n, k, path, res)
-        path.pop()
+            self.backtrack(j, n, k)
+        self.path.pop()
     
