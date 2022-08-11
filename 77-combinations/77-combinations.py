@@ -15,6 +15,10 @@ class Solution:
             self.path.pop()
             return
         
+        if len(self.path) + n - i < k:
+            self.path.pop()
+            return
+        
         for j in range(i + 1, n + 1):
             self.backtrack(j, n, k)
         self.path.pop()
