@@ -1,5 +1,6 @@
 class Solution:
     def __init__(self):
+        self.used = set()
         self.path = []
         self.res = []
         
@@ -14,7 +15,9 @@ class Solution:
             return
         
         for num in nums:
-            if num not in self.path:
+            if num not in self.used:
+                self.used.add(num)
                 self.path.append(num)
                 self.dfs(nums)
+                self.used.remove(num)
                 self.path.pop()
