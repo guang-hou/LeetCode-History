@@ -11,7 +11,7 @@ class Solution:
     def dfs(self, nums):
         if len(self.path) == len(nums):
             self.res.append(self.path[:])
-        
+            return
         
         for num in nums:
             if num not in self.path:
