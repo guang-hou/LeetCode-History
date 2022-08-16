@@ -1,39 +1,26 @@
+from queue import PriorityQueue
+
 class Solution:
     def __init__(self):
-        self.departArrivalCounts = defaultdict(dict)   
-        self.path = ["JFK"]
-        self.res = []
+        self.flights = {}   
+        self.path = []
         
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
         for ticket in tickets:
             depart, arrival = ticket
-            allArrivals = self.departArrivalCounts[depart]
-            allArrivals[arrival] = allArrivals.get(arrival, 0) + 1
+            if depart not in self.flights:
+                self.flights[depart] = PriorityQueue()
+            self.flights[depart].put(arrival, arrival)  
         
-        for depart, arrivals in self.departArrivalCounts.items():
-            self.departArrivalCounts[depart] = dict(sorted(arrivals.items()))
+        self.dfs("JFK")
         
-        targetLength = len(tickets) + 1
+        return self.path[::-1]
         
-        self.dfs("JFK", targetLength)
+    def dfs(self, depart):
         
-        return self.res[0]
+        arrivals = self.flights.get(depart)
         
-    def dfs(self, depart, targetLength):
+        while arrivals and not arrivals.empty():
+            self.dfs(arrivals.get())
         
-        if len(self.path) == targetLength:
-            self.res.append(self.path[:])
-            return
-        
-        if self.res:
-            return
-        
-        allArrivals = self.departArrivalCounts[depart]
-        
-        for arrival in allArrivals:
-            if allArrivals[arrival] > 0:
-                allArrivals[arrival] -= 1
-                self.path.append(arrival)
-                self.dfs(arrival, targetLength)
-                allArrivals[arrival] += 1
-                self.path.pop()
+        self.path.append(depart)
