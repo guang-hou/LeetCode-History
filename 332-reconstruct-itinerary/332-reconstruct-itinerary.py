@@ -1,35 +1,39 @@
 class Solution:
+    def __init__(self):
+        self.departArrivalCounts = defaultdict(dict)   
+        self.path = ["JFK"]
+        self.res = []
+        
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
-        combined_tickets = defaultdict(list)
+        for ticket in tickets:
+            depart, arrival = ticket
+            allArrivals = self.departArrivalCounts[depart]
+            allArrivals[arrival] = allArrivals.get(arrival, 0) + 1
         
-        for start, end in tickets:
-            combined_tickets[start].append(end)
+        for depart, arrivals in self.departArrivalCounts.items():
+            self.departArrivalCounts[depart] = dict(sorted(arrivals.items()))
         
-        for start, ends in combined_tickets.items():
-            ends.sort()
+        targetLength = len(tickets) + 1
         
-        path, res = ["JFK"], []
+        self.dfs("JFK", targetLength)
         
-        def backtrack(start):
-            if len(path) == len(tickets) + 1:
-                res.append(path[:])
-                return
-            
-            if res:
-                return
-            
-            # if start not in combined_tickets:
-            #     return
-            
-            ends = combined_tickets[start]
-            for i in range(len(ends)):
-                end = ends[i]
-                path.append(end)
-                ends.pop(i)
-                backtrack(end)
-                ends.insert(i, end)
-                path.pop()
+        return self.res[0]
         
-        backtrack("JFK")
+    def dfs(self, depart, targetLength):
         
-        return res[0]
+        if len(self.path) == targetLength:
+            self.res.append(self.path[:])
+            return
+        
+        if self.res:
+            return
+        
+        allArrivals = self.departArrivalCounts[depart]
+        
+        for arrival in allArrivals:
+            if allArrivals[arrival] > 0:
+                allArrivals[arrival] -= 1
+                self.path.append(arrival)
+                self.dfs(arrival, targetLength)
+                allArrivals[arrival] += 1
+                self.path.pop()
