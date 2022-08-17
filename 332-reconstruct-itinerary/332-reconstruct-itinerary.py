@@ -8,11 +8,13 @@ class Solution:
         path, stack = [], ['JFK']
 
         while stack:
-            dests = targets[stack[-1]]  # child nodes
-            while targets[stack[-1]]:
-                largestChild = targets[stack[-1]].pop()
-                stack.append(largestChild)  # add largets first to stack, which will be visited in the last
-
-            path.append(stack.pop())
+            # add all child nodes to stack
+            if targets[stack[-1]]:
+                while targets[stack[-1]]:
+                    largestChild = targets[stack[-1]].pop()  #### here dests will not affect targets
+                    stack.append(largestChild)  # add largets first to stack, which will be visited in the last
+            else:
+                dest = stack.pop()
+                path.append(dest)
 
         return path[::-1]
