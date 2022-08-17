@@ -1,26 +1,18 @@
-from queue import PriorityQueue
+class Solution:      
+    def findItinerary(self, tickets):
+        targets = collections.defaultdict(list)
+        for a, b in sorted(tickets)[::-1]:
+            #targets[a].append(b)  # targets[a] = {e, d, c, b}  里面会倒序排列  
+            targets[a] += [b]
+            
+        path = []
 
-class Solution:
-    def __init__(self):
-        self.flights = {}   
-        self.path = []
-        
-    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
-        for ticket in tickets:
-            depart, arrival = ticket
-            if depart not in self.flights:
-                self.flights[depart] = PriorityQueue()
-            self.flights[depart].put(arrival, arrival)  
-        
-        self.dfs("JFK")
-        
-        return self.path[::-1]
-        
-    def dfs(self, depart):
-        
-        arrivals = self.flights.get(depart)
-        
-        while arrivals and not arrivals.empty():
-            self.dfs(arrivals.get())
-        
-        self.path.append(depart)
+        def visit(start):
+            dests = targets[start]
+            while dests:
+                smallestChild = dests.pop()
+                visit(smallestChild)
+            path.append(start)  # targets[start] now is empty, we are stuck, no further move unless go back one level up
+
+        visit('JFK')
+        return path[::-1]
