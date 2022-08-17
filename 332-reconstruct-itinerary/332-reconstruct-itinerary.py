@@ -1,21 +1,18 @@
-from collections import defaultdict
-from typing import List
+class Solution:      
+    def findItinerary(self, tickets):
+        targets = collections.defaultdict(list)
+        for dept, dest in sorted(tickets)[::-1]:
+            targets[dept].append(dest)         # targets["ATL"] = ["AAA", "ABB", "BBB"] 
+                                         # {'ATL': ['JFK', 'SFO'], 'JFK': ['ATL', 'SFO'], 'SFO': ['ATL']}
 
-class Solution:
-    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
-        # get depts -> dests (with dests in reverse sorted order, since we're popping)
-        dept_to_dests = defaultdict(list)
-        for dept, dest in sorted(tickets, reverse=True):
-            dept_to_dests[dept].append(dest)
-
-        route = []
-        stack = ['JFK']
+        path, stack = [], ['JFK']
 
         while stack:
-            while dept_to_dests[stack[-1]]:
-                t_dest = dept_to_dests[stack[-1]].pop()
-                stack.append(t_dest)
+            dests = targets[stack[-1]]  # child nodes
+            while targets[stack[-1]]:
+                largestChild = targets[stack[-1]].pop()
+                stack.append(largestChild)  # add largets first to stack, which will be visited in the last
 
-            route.append(stack.pop())
+            path.append(stack.pop())
 
-        return list(reversed(route))
+        return path[::-1]
