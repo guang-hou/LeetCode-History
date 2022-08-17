@@ -1,18 +1,21 @@
-class Solution:      
-    def findItinerary(self, tickets):
-        targets = collections.defaultdict(list)
-        for a, b in sorted(tickets)[::-1]:
-            #targets[a].append(b)  # targets[a] = {e, d, c, b}  里面会倒序排列  
-            targets[a] += [b]
-            
-        path = []
+from collections import defaultdict
+from typing import List
 
-        def visit(start):
-            dests = targets[start]
-            while dests:
-                smallestChild = dests.pop()
-                visit(smallestChild)
-            path.append(start)  # targets[start] now is empty, we are stuck, no further move unless go back one level up
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        # get depts -> dests (with dests in reverse sorted order, since we're popping)
+        dept_to_dests = defaultdict(list)
+        for dept, dest in sorted(tickets, reverse=True):
+            dept_to_dests[dept].append(dest)
 
-        visit('JFK')
-        return path[::-1]
+        route = []
+        stack = ['JFK']
+
+        while stack:
+            while dept_to_dests[stack[-1]]:
+                t_dest = dept_to_dests[stack[-1]].pop()
+                stack.append(t_dest)
+
+            route.append(stack.pop())
+
+        return list(reversed(route))
