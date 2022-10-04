@@ -6,12 +6,12 @@ class Solution:
         leftEdge, rightEdge = points[0]
         
         for i in range(1, len(points)):
-            leftX, rightX = points[i]
-            if leftX > rightEdge:
-                leftEdge, rightEdge = leftX, rightX
+            x_start, x_end = points[i]
+            if x_start > rightEdge:
+                leftEdge, rightEdge = x_start, x_end
                 res += 1
             else:
-                leftEdge = max(leftEdge, leftX)
-                rightEdge = min(rightEdge, rightX)
+                leftEdge = max(leftEdge, x_start)
+                rightEdge = min(rightEdge, x_end)
         
         return res
