@@ -5,31 +5,25 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    def __init__(self):
+        self.res = 0
+    
+    def traverse(self, node):
+        if not node:
+            return 2
+        
+        left, right = self.traverse(node.left), self.traverse(node.right)
+        
+        if left ==2 and right ==2:
+            return 0
+        elif left == 0 or right == 0:
+            self.res += 1
+            return 1
+        elif left == 1 or right == 1:
+            return 2
+        
     def minCameraCover(self, root: Optional[TreeNode]) -> int:
-        res = 0
+        if self.traverse(root) == 0:
+            self.res += 1
         
-        def traversal(node):
-            nonlocal res
-            
-            if not node: return 2
-            
-            left = traversal(node.left)
-            right = traversal(node.right)
-            
-
-            if left == 2 and right == 2:
-                return 0
-            
-            elif left == 0 or right == 0:
-                res += 1
-                return 1
-            
-            elif left == 1 or right == 1:
-                return 2
-            
-        
-        if traversal(root) == 0:
-            res += 1
-        
-        return res
-            
+        return self.res
