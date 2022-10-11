@@ -2,14 +2,9 @@ class Solution:
     def maxProfit(self, k: int, prices: List[int]) -> int:
         n = len(prices)
         
-        dp = [[[float("-inf")] * 2 for col in range(k + 1)] for _ in range(n)]
+        dp = [[[0] * 2 for col in range(k + 1)] for row in range(n)]
         
-        for i in range(n):
-            dp[i][0][0] = 0
-            dp[i][0][1] = float("-inf")
-        
-        for j in range(1, k + 1):
-            dp[0][j][0] = 0
+        for j in range(k + 1):
             dp[0][j][1] = -prices[0]
         
         for i in range(1, n):
