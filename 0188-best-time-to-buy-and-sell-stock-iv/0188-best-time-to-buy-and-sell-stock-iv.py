@@ -2,7 +2,7 @@ class Solution:
     def maxProfit(self, k: int, prices: List[int]) -> int:
         n = len(prices)
         
-        dp = [[[0] * 2 for col in range(k + 1)] for row in range(n)]
+        dp = [[[0, 0] for col in range(k + 1)] for row in range(n)]
         
         for j in range(k + 1):
             dp[0][j][1] = -prices[0]
