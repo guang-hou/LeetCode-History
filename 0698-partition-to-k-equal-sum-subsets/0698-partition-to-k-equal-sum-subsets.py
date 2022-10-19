@@ -3,6 +3,7 @@ class Solution:
         # path = []
         # used = [False] * len(nums)
         mask = 0
+        memo = {}
         
         total = sum(nums) 
         subTotal = total // k
@@ -15,7 +16,6 @@ class Solution:
         if nums[0] > subTotal:
             return False
         
-        @cache
         def backtrack(startIndex, pathTotal, count, mask):  # 到达一个node时,pathTotal是从root到这个node之前所有node的和
                                           # count是所有之前node的subset的个数
             # print(path, pathTotal, count)
@@ -25,6 +25,9 @@ class Solution:
             
             if pathTotal // subTotal != count:
                 return False
+            
+            if mask in memo:
+                return memo[mask]
             
             if pathTotal % subTotal == 0:
                 startIndex = 0
@@ -52,7 +55,8 @@ class Solution:
                     mask = mask ^ (1 << i)
 
                     # path.pop()
-    
+            
+            memo[mask] = False
     
         return backtrack(0, 0, 0, 0)
         
