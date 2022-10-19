@@ -31,10 +31,12 @@ class Solution:
         if mask in memo:
             return memo[mask]
 
-        if pathTotal % subTotal == 0:
-            startIndex = 0
-        else:
-            startIndex += 1
+        # if pathTotal % subTotal == 0:
+        #     startIndex = 0
+        # else:
+        #     startIndex += 1
+        
+        startIndex = 0
 
         for i in range(startIndex, len(nums)):
             num = nums[i]
