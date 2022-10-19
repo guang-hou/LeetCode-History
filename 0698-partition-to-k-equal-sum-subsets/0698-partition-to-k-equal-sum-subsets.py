@@ -16,47 +16,49 @@ class Solution:
         if nums[0] > subTotal:
             return False
         
-        def backtrack(startIndex, pathTotal, count, mask):  # 到达一个node时,pathTotal是从root到这个node之前所有node的和
-                                          # count是所有之前node的subset的个数
-            # print(path, pathTotal, count)
-                
-            if count == k:
-                return True
-            
-            if pathTotal // subTotal != count:
-                return False
-            
-            if mask in memo:
-                return memo[mask]
-            
-            if pathTotal % subTotal == 0:
-                startIndex = 0
-            else:
-                startIndex += 1
-            
-            for i in range(startIndex, len(nums)):
-                num = nums[i]
-                if (mask >> i) & 1 == 0:
-                    if i > 0 and nums[i] == nums[i - 1] and ((mask >> (i - 1)) & 1) == 0:
-                        continue
-                    
-                    # path.append(num)
-                    mask = mask | (1 << i)
-                    pathTotal += num
-                    if pathTotal >= subTotal and pathTotal % subTotal == 0:
-                        count += 1  
-                        
-                    if backtrack(startIndex, pathTotal, count, mask):
-                        return True
+        return self.backtrack(0, 0, 0, subTotal, mask, memo, k, nums)
+        
+    def backtrack(self, startIndex, pathTotal, count, subTotal, mask, memo, k, nums):  
+        # 到达一个node时,pathTotal是从root到这个node之前所有node的和
+        # count是所有之前node的subset的个数
 
-                    if pathTotal >= subTotal and pathTotal % subTotal == 0:
-                        count -= 1
-                    pathTotal -= num
-                    mask = mask ^ (1 << i)
+        if count == k:
+            return True
 
-                    # path.pop()
-            
-            memo[mask] = False
+        if pathTotal // subTotal != count:
+            return False
+
+        if mask in memo:
+            return memo[mask]
+
+        if pathTotal % subTotal == 0:
+            startIndex = 0
+        else:
+            startIndex += 1
+
+        for i in range(startIndex, len(nums)):
+            num = nums[i]
+            if (mask >> i) & 1 == 0:
+                if i > 0 and nums[i] == nums[i - 1] and ((mask >> (i - 1)) & 1) == 0:
+                    continue
+
+                # path.append(num)
+                mask = mask | (1 << i)
+                pathTotal += num
+                if pathTotal >= subTotal and pathTotal % subTotal == 0:
+                    count += 1  
+
+                if self.backtrack(startIndex, pathTotal, count, subTotal, mask, memo, k, nums):
+                    return True
+
+                if pathTotal >= subTotal and pathTotal % subTotal == 0:
+                    count -= 1
+                pathTotal -= num
+                mask = mask ^ (1 << i)
+
+                # path.pop()
+
+        memo[mask] = False
     
-        return backtrack(0, 0, 0, 0)
+
         
