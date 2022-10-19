@@ -1,61 +1,59 @@
 class Solution:       
     def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
-        # path = []
-        # used = [False] * len(nums)
         mask = 0
         memo = {}
         
         total = sum(nums) 
-        subTotal = total // k
+        target = total // k
         
         nums.sort(reverse=True)
         
         if total % k != 0:
             return False
 
-        if nums[0] > subTotal:
+        if nums[0] > target:
             return False
         
-        return self.backtrack(0, 0, 0, subTotal, mask, memo, k, nums)
+        bucketSum, filledBucketNum = 0, 0
         
-    def backtrack(self, startIndex, pathTotal, count, subTotal, mask, memo, k, nums):  
+        return self.backtrack(target, bucketSum, filledBucketNum, mask, memo, k, nums)
+        
+    def backtrack(self, target, bucketSum, filledBucketNum, mask, memo, k, nums):  
         # 到达一个node时,pathTotal是从root到这个node之前所有node的和
         # count是所有之前node的subset的个数
 
-        if count == k:
+        if filledBucketNum == k:
             return True
 
-        if pathTotal // subTotal != count:
+        if bucketSum > target:
             return False
 
         if mask in memo:
             return memo[mask]
 
-        # if pathTotal % subTotal == 0:
-        #     startIndex = 0
-        # else:
-        #     startIndex += 1
-        
-        startIndex = 0
-
-        for i in range(startIndex, len(nums)):
+        for i in range(len(nums)):
             num = nums[i]
             if (mask >> i) & 1 == 0:
-                if i > 0 and nums[i] == nums[i - 1] and ((mask >> (i - 1)) & 1) == 0:
-                    continue
+                # if i > 0 and nums[i] == nums[i - 1] and ((mask >> (i - 1)) & 1) == 0:
+                #     continue
 
                 # path.append(num)
                 mask = mask | (1 << i)
-                pathTotal += num
-                if pathTotal >= subTotal and pathTotal % subTotal == 0:
-                    count += 1  
+                
+                bucketSum += num
+                if bucketSum == target:
+                    filledBucketNum += 1  
+                    bucketSum = 0
 
-                if self.backtrack(startIndex, pathTotal, count, subTotal, mask, memo, k, nums):
+                if self.backtrack(target, bucketSum, filledBucketNum, mask, memo, k, nums):
                     return True
 
-                if pathTotal >= subTotal and pathTotal % subTotal == 0:
-                    count -= 1
-                pathTotal -= num
+                if bucketSum == 0:
+                    filledBucketNum -= 1
+                    bucketSum = target
+                    
+                bucketSum -= num
+                
                 mask = mask ^ (1 << i)
 
                 # path.pop()
