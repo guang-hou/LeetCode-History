@@ -6,9 +6,14 @@ class Solution:
         
         for i in range(m):
             for j in range(n):
+                if grid2[i][j] == 1 and grid1[i][j] == 0 and not visited[i][j]:
+                    self.dfs(i, j, grid1, grid2, visited)
+
+        for i in range(m):
+            for j in range(n):
                 if grid2[i][j] == 1 and not visited[i][j]:
-                    if (self.dfs(i, j, grid1, grid2, visited)):
-                        res += 1
+                    res += 1
+                    self.dfs(i, j, grid1, grid2, visited)
         
         return res
         
@@ -16,19 +21,12 @@ class Solution:
         m, n = len(grid2), len(grid2[0])
         
         if i < 0 or i == m or j < 0 or j == n:
-            return True
+            return 
         
         if grid2[i][j] == 1 and not visited[i][j]:
             visited[i][j] = True
             
-            l = self.dfs(i - 1, j, grid1, grid2, visited)
-            r = self.dfs(i + 1, j, grid1, grid2, visited)
-            u = self.dfs(i, j - 1, grid1, grid2, visited)
-            d = self.dfs(i, j + 1, grid1, grid2, visited)
-            
-            if grid1[i][j] != 1:
-                return False
-            
-            return l and r and u and d
-        
-        return True
+            self.dfs(i - 1, j, grid1, grid2, visited)
+            self.dfs(i + 1, j, grid1, grid2, visited)
+            self.dfs(i, j - 1, grid1, grid2, visited)
+            self.dfs(i, j + 1, grid1, grid2, visited)
