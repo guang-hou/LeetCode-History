@@ -21,16 +21,15 @@ class Solution:
         ans = []
         origHeight = heightMap[root.val]
         
-        for target in queries:
-            depth = depthMap[target]
-            #print(TwoHighestNodesAtdepth[depth])
-
-            if len(TwoHighestNodesAtdepth[depth]) == 1:  # root node, or single leaf node
-                ans.append(depth - 1)
-            elif len(TwoHighestNodesAtdepth[depth]) == 2 and TwoHighestNodesAtdepth[depth][0] == target:
-                otherNode = TwoHighestNodesAtdepth[depth][1]
-                ans.append(depth + heightMap[otherNode])
-            else:
+        for val in queries:
+            nodeDepth = depthMap[val]
+            
+            if len(TwoHighestNodesAtdepth[nodeDepth]) == 1:  # only one node on this depth level
+                ans.append(nodeDepth - 1)
+            elif len(TwoHighestNodesAtdepth[nodeDepth]) == 2 and TwoHighestNodesAtdepth[nodeDepth][0] == val: # this node affects the origin height
+                otherNode = TwoHighestNodesAtdepth[nodeDepth][1]
+                ans.append(nodeDepth + heightMap[otherNode])
+            else:  # this node doesn't affect the origin height
                 ans.append(origHeight)
         
         return ans
