@@ -30,11 +30,7 @@ class Solution:
         upp = self.dfs(grid, visited, i, j - 1)
         down = self.dfs(grid, visited, i, j + 1)
             
-        res = ["1"]
-        res += left
-        res += right
-        res += upp
-        res += down
+        res = ["1"] + left + right + upp + down
         
         return res
         
