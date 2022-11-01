@@ -3,44 +3,26 @@ class Solution:
         path = []
         ans = []
         
-        self.backtrack(n, path, 0, 0, ans)
+        self.backtrack(n, path, ans, 1, 0, 0)
         
         return ans
         
-    def backtrack(self, n, path, leftCount, rightCount, ans):
+    def backtrack(self, n, path, ans, position, leftCount, rightCount):
         #print(path)
+        if leftCount < rightCount:
+            return
+        
         if leftCount > n or rightCount > n:
             return
         
-        if len(path) > 0 and path[0] == ")":
+        if position == 2 * n + 1 and leftCount == rightCount:
+            ans.append("".join(path))
             return
         
-        if len(path) == 2 * n:
-            if self.isValid(path, n):
-                #print("Yes")
-                ans.append("".join(path))
-            return
-        
-        
-        for c in "(", ")":
-            path.append(c)
-            if c == "(":
-                self.backtrack(n, path, leftCount + 1, rightCount, ans)
-            else:
-                self.backtrack(n, path, leftCount, rightCount + 1, ans)          
-            path.pop()
-                
-        
-    def isValid(self, path, n):
-        stack = []
-        
-        for c in path:
-            if c == "(":
-                stack.append(c)
-            else:
-                if len(stack) == 0 or stack[-1] == ")":
-                    return False
-                else:
-                    stack.pop()
-        
-        return len(stack) == 0
+        path.append("(")
+        self.backtrack(n, path, ans, position + 1, leftCount + 1, rightCount)
+        path.pop()
+
+        path.append(")")
+        self.backtrack(n, path, ans, position + 1, leftCount, rightCount + 1)          
+        path.pop()
